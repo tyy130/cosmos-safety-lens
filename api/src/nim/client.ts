@@ -24,7 +24,7 @@ export async function analyzeVideo(videoUrl: string): Promise<string> {
   if (!apiKey) throw new Error('NVIDIA_API_KEY not set');
 
   const body = {
-    model: 'nvidia/nemotron-nano-12b-v2-vl',
+    model: 'nvidia/cosmos-reason2-8b',
     messages: [
       {
         role: 'system',

@@ -30,9 +30,11 @@ header p { color: var(--muted); margin-top: 0.25rem; }
 
 .video-player { background: var(--surface); border-radius: 12px; overflow: hidden; }
 .video-element { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-.event-timeline { position: relative; height: 32px; background: var(--bg); padding: 0 4px; }
-.event-marker { position: absolute; top: 8px; width: 14px; height: 14px; border-radius: 50%; transform: translateX(-50%); border: 2px solid transparent; cursor: pointer; transition: transform 0.1s; }
-.event-marker:hover, .event-marker.selected { transform: translateX(-50%) scale(1.4); border-color: #fff; }
+.event-timeline { position: relative; height: 24px; background: linear-gradient(to bottom, rgba(0,0,0,0.3), var(--bg)); margin: 0 12px 8px; border-radius: 4px; }
+.event-marker { position: absolute; top: 50%; width: 10px; height: 10px; border-radius: 50%; transform: translate(-50%, -50%); border: none; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 0 8px currentColor; }
+.event-marker:hover, .event-marker.selected { transform: translate(-50%, -50%) scale(1.6); box-shadow: 0 0 12px currentColor, 0 0 4px #fff; }
+.event-marker::after { content: ''; position: absolute; top: -4px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-bottom: 4px solid currentColor; opacity: 0; transition: opacity 0.15s; }
+.event-marker:hover::after, .event-marker.selected::after { opacity: 1; }
 
 .reasoning-panel { background: var(--surface); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; overflow-y: auto; max-height: 600px; }
 .reasoning-panel h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.5rem; }
@@ -63,3 +65,15 @@ header p { color: var(--muted); margin-top: 0.25rem; }
 
 .summary p { font-size: 0.95rem; line-height: 1.6; }
 .duration { font-size: 0.8rem; color: var(--muted); display: block; margin-top: 0.25rem; }
+
+/* Attribution footer */
+.attribution { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 2rem; }
+.attribution-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.attribution-logos { display: flex; align-items: center; gap: 2rem; }
+.attribution-logos img { height: 24px; filter: grayscale(100%) brightness(0.7); opacity: 0.6; transition: opacity 0.2s, filter 0.2s; }
+.attribution-logos img:hover { opacity: 1; filter: grayscale(0%); }
+.attribution-logos a { display: flex; align-items: center; }
+
+/* Tighten results grid */
+.results { display: grid; grid-template-columns: 1fr 380px; gap: 1.25rem; margin-top: 1.25rem; }
+.reasoning-panel { max-height: 520px; }

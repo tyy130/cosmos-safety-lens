@@ -42,7 +42,7 @@ export default function App() {
     <div className="app">
       <header>
         <h1>Cosmos Safety Lens</h1>
-        <p>Physical AI reasoning for dashcam footage — powered by NVIDIA Nemotron Vision</p>
+        <p>Physical AI reasoning for dashcam footage — powered by NVIDIA Cosmos Reason 2</p>
       </header>
       <DemoSelector onSelect={(clip: DemoClip) => {
         setVideoUrl(clip.url);
@@ -75,6 +75,17 @@ export default function App() {
           />
         </div>
       )}
+      <footer className="attribution">
+        <span className="attribution-label">Powered by</span>
+        <div className="attribution-logos">
+          <a href="https://www.nvidia.com/en-us/ai/cosmos/" target="_blank" rel="noopener noreferrer" title="NVIDIA Cosmos">
+            <img src="/logos/nvidia.png" alt="NVIDIA" />
+          </a>
+          <a href="https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction" target="_blank" rel="noopener noreferrer" title="Nexar Collision Prediction Dataset">
+            <img src="/logos/nexar.png" alt="Nexar" />
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

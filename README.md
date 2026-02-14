@@ -1,6 +1,6 @@
 # Cosmos Safety Lens
 
-Physical AI reasoning for dashcam footage — powered by **NVIDIA Cosmos Reason 2**.
+Physical AI reasoning for dashcam footage — powered by **NVIDIA Cosmos Reason 2 (8B)**.
 
 ## What It Does
 
@@ -38,7 +38,7 @@ Open [http://localhost:5173](http://localhost:5173) — click a demo clip or pas
 ## Architecture
 
 ```
-[Video URL] → POST /analyze → NVIDIA NIM (cosmos-reason2-8b) → parse <think> → structured events
+[Video URL] → POST /analyze → NVIDIA NIM (cosmos-reason2-8b) → parse reasoning → structured events
 ```
 
 Safety events are overlaid on the video timeline as clickable markers. Clicking a marker reveals the full physical reasoning chain — the chain of thought Cosmos Reason 2 used to identify the danger.
