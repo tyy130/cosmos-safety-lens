@@ -71,6 +71,7 @@ export default function App() {
           <ReasoningPanel
             result={result}
             selectedEventIdx={selectedEventIdx}
+            onEventSelect={setSelectedEventIdx}
           />
         </div>
       )}

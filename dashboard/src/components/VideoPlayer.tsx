@@ -29,7 +29,9 @@ export function VideoPlayer({ url, events, selectedEventIdx, onEventSelect }: Pr
 
   useEffect(() => {
     if (selectedEventIdx !== null && videoRef.current) {
-      videoRef.current.currentTime = events[selectedEventIdx].timestamp_seconds;
+      const video = videoRef.current;
+      video.currentTime = events[selectedEventIdx]!.timestamp_seconds;
+      video.play().catch(() => {});
     }
   }, [selectedEventIdx, events]);
 
@@ -43,7 +45,6 @@ export function VideoPlayer({ url, events, selectedEventIdx, onEventSelect }: Pr
         src={url}
         controls
         className="video-element"
-        crossOrigin="anonymous"
       />
       <div className="event-timeline" role="region" aria-label="Event timeline">
         {events.map((event, idx) => (

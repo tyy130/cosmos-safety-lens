@@ -13,6 +13,7 @@ import type { AnalysisResult } from '../types';
 interface Props {
   result: AnalysisResult;
   selectedEventIdx: number | null;
+  onEventSelect: (idx: number) => void;
 }
 
 const SEVERITY_LABEL = {
@@ -21,7 +22,7 @@ const SEVERITY_LABEL = {
   INFO: { label: 'INFO', className: 'badge-info' }
 } as const;
 
-export function ReasoningPanel({ result, selectedEventIdx }: Props) {
+export function ReasoningPanel({ result, selectedEventIdx, onEventSelect }: Props) {
   const selectedEvent = selectedEventIdx !== null ? result.events[selectedEventIdx] : null;
 
   return (
@@ -47,7 +48,13 @@ export function ReasoningPanel({ result, selectedEventIdx }: Props) {
             <p className="event-reasoning">{selectedEvent.reasoning}</p>
           </div>
         ) : (
-          <pre className="think-trace">{result.rawThink || 'No reasoning chain available.'}</pre>
+          <pre className="think-trace">
+            {result.rawThink ||
+              result.events.map(e =>
+                `[${e.timestamp_seconds}s ${e.severity}] ${e.type.replace(/_/g, ' ')}\n${e.reasoning}`
+              ).join('\n\n') ||
+              'No events detected.'}
+          </pre>
         )}
       </div>
 
@@ -55,10 +62,14 @@ export function ReasoningPanel({ result, selectedEventIdx }: Props) {
         <h3>All Events ({result.events.length})</h3>
         {result.events.length === 0 && <p className="no-events">No safety events detected.</p>}
         {result.events.map((event, idx) => (
-          <div key={idx} className={`event-item severity-${event.severity.toLowerCase()}`}>
+          <button
+            key={idx}
+            className={`event-item severity-${event.severity.toLowerCase()} ${selectedEventIdx === idx ? 'selected' : ''}`}
+            onClick={() => onEventSelect(idx)}
+          >
             <span className="event-time">{event.timestamp_seconds}s</span>
             <span className="event-type">{event.type.replace(/_/g, ' ')}</span>
-          </div>
+          </button>
         ))}
       </div>
     </div>
