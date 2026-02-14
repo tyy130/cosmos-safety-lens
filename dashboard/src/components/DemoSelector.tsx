@@ -9,28 +9,24 @@
 */
 
 // dashboard/src/components/DemoSelector.tsx
-import { useEffect, useState } from 'react';
 import type { DemoClip } from '../types';
-import { getDemoClips } from '../api/client';
+
+const DEMO_CLIPS: DemoClip[] = [
+  { id: 'clip-1', label: 'Near-Miss Collision', description: 'Nexar positive sample — imminent near-miss event', url: '/clips/00002.mp4' },
+  { id: 'clip-2', label: 'High-Severity Impact', description: 'Nexar positive sample — higher-severity collision', url: '/clips/00030.mp4' },
+  { id: 'clip-3', label: 'Normal Driving', description: 'Nexar negative sample — standard urban driving baseline', url: '/clips/01044.mp4' },
+];
 
 interface Props {
   onSelect: (clip: DemoClip) => void;
 }
 
 export function DemoSelector({ onSelect }: Props) {
-  const [clips, setClips] = useState<DemoClip[]>([]);
-
-  useEffect(() => {
-    getDemoClips().then(setClips).catch(console.error);
-  }, []);
-
-  if (clips.length === 0) return null;
-
   return (
     <div className="demo-selector">
       <h3>Try a demo clip</h3>
       <div className="demo-clips">
-        {clips.map(clip => (
+        {DEMO_CLIPS.map(clip => (
           <button
             key={clip.id}
             className="demo-clip-btn"
