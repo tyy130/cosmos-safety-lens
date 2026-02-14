@@ -8,14 +8,18 @@
 ===============================================
 */
 
+// dashboard/src/App.tsx
 import { useState } from 'react';
-import type { AnalysisResult } from './types.js';
-import { analyzeVideo, getDemoClips as _getDemoClips } from './api/client.js';
+import type { AnalysisResult, DemoClip } from './types';
+import { analyzeVideo } from './api/client';
+import { VideoPlayer } from './components/VideoPlayer';
+import { ReasoningPanel } from './components/ReasoningPanel';
+import { DemoSelector } from './components/DemoSelector';
 
 export default function App() {
   const [videoUrl, setVideoUrl] = useState('');
   const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [_selectedEventIdx, setSelectedEventIdx] = useState<number | null>(null);
+  const [selectedEventIdx, setSelectedEventIdx] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,10 +44,14 @@ export default function App() {
         <h1>Cosmos Safety Lens</h1>
         <p>Physical AI reasoning for dashcam footage — powered by NVIDIA Cosmos Reason 2</p>
       </header>
+      <DemoSelector onSelect={(clip: DemoClip) => {
+        setVideoUrl(clip.url);
+        handleAnalyze(clip.url);
+      }} />
       <div className="url-input">
         <input
           type="text"
-          placeholder="Paste a dashcam video URL..."
+          placeholder="Or paste a dashcam video URL..."
           value={videoUrl}
           onChange={e => setVideoUrl(e.target.value)}
         />
@@ -54,8 +62,16 @@ export default function App() {
       {error && <div className="error">{error}</div>}
       {result && (
         <div className="results">
-          <p>Analysis complete: {result.events.length} event(s) detected</p>
-          <p>{result.summary}</p>
+          <VideoPlayer
+            url={result.video_url}
+            events={result.events}
+            selectedEventIdx={selectedEventIdx}
+            onEventSelect={setSelectedEventIdx}
+          />
+          <ReasoningPanel
+            result={result}
+            selectedEventIdx={selectedEventIdx}
+          />
         </div>
       )}
     </div>
