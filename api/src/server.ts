@@ -10,6 +10,7 @@
 import express from 'express';
 import cors from 'cors';
 import { analyzeRouter } from './routes/analyze.js';
+import { DEMO_CLIPS } from './demo/clips.js';
 
 export function createApp() {
   const app = express();
@@ -17,5 +18,6 @@ export function createApp() {
   app.use(cors({ origin: process.env.CORS_ORIGIN ?? '*' }));
   app.use('/analyze', analyzeRouter);
   app.get('/health', (_req, res) => res.json({ ok: true }));
+  app.get('/demo-clips', (_req, res) => res.json(DEMO_CLIPS));
   return app;
 }
