@@ -10,7 +10,7 @@
 
 import type { AnalysisResult, DemoClip } from '../types.js';
 
-const BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:3001';
+const BASE = import.meta.env.VITE_API_URL ?? 'https://cosmos-safety-lens-api-production.up.railway.app';
 
 export async function analyzeVideo(videoUrl: string): Promise<AnalysisResult> {
   const res = await fetch(`${BASE}/analyze`, {
