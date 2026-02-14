@@ -23,7 +23,7 @@ export interface ParsedResponse {
 export function parseNimResponse(raw: string): ParsedResponse {
   // Extract <think> block
   const thinkMatch = raw.match(/<think>([\s\S]*?)<\/think>/);
-  const rawThink = thinkMatch ? thinkMatch[1].trim() : '';
+  const rawThink = thinkMatch ? thinkMatch[1]!.trim() : '';
 
   // Extract JSON — everything after the closing </think> tag, or the whole string
   const jsonStr = raw.replace(/<think>[\s\S]*?<\/think>/, '').trim();

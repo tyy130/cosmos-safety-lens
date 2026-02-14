@@ -42,5 +42,6 @@
     "skipLibCheck": true,
 
     "moduleResolution": "nodenext",
-  }
+  },
+  "exclude": ["vitest.config.ts", "src/**/*.test.ts", "node_modules", "dist"]
 }
