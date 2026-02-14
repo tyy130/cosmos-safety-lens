@@ -1,35 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/*
+===============================================
+  _____ _   ___ _____ ___ ___  ___  _____   __
+ |_   _/_\ / __|_   _|_ _/ __|   \| __\ \ / /
+   | |/ _ \ (__  | |  | | (__| |) | _| \ V /
+   |_/_/ \_\___| |_| |___\___|___/|___| \_/
+                                    v2.14.7-hpc
+===============================================
+*/
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useState } from 'react';
+import type { AnalysisResult } from './types.js';
+import { analyzeVideo, getDemoClips as _getDemoClips } from './api/client.js';
+
+export default function App() {
+  const [videoUrl, setVideoUrl] = useState('');
+  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [_selectedEventIdx, setSelectedEventIdx] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleAnalyze(url: string) {
+    setLoading(true);
+    setError(null);
+    setResult(null);
+    setSelectedEventIdx(null);
+    try {
+      const data = await analyzeVideo(url);
+      setResult(data);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Analysis failed');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="app">
+      <header>
+        <h1>Cosmos Safety Lens</h1>
+        <p>Physical AI reasoning for dashcam footage — powered by NVIDIA Cosmos Reason 2</p>
+      </header>
+      <div className="url-input">
+        <input
+          type="text"
+          placeholder="Paste a dashcam video URL..."
+          value={videoUrl}
+          onChange={e => setVideoUrl(e.target.value)}
+        />
+        <button onClick={() => handleAnalyze(videoUrl)} disabled={loading || !videoUrl}>
+          {loading ? 'Analyzing...' : 'Analyze'}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      {error && <div className="error">{error}</div>}
+      {result && (
+        <div className="results">
+          <p>Analysis complete: {result.events.length} event(s) detected</p>
+          <p>{result.summary}</p>
+        </div>
+      )}
+    </div>
+  );
 }
-
-export default App
