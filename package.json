@@ -1,0 +1,10 @@
+{
+  "name": "cosmos-cookoff",
+  "private": true,
+  "scripts": {
+    "dev:api": "cd api && npm run dev",
+    "dev:dashboard": "cd dashboard && npm run dev",
+    "test:api": "cd api && npm test",
+    "test:dashboard": "cd dashboard && npm test"
+  }
+}
