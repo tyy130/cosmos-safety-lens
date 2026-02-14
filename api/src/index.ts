@@ -7,24 +7,9 @@
                                     v2.14.7-hpc
 ===============================================
 */
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
+import 'dotenv/config';
+import { createApp } from './server.js';
 
-dotenv.config()
-
-const app = express()
-const PORT = process.env.PORT || 3000
-
-app.use(cors())
-app.use(express.json())
-
-app.get('/health', (_req, res) => {
-  res.json({ status: 'ok' })
-})
-
-app.listen(PORT, () => {
-  console.log(`Cosmos Safety Lens API running on port ${PORT}`)
-})
-
-export default app
+const port = process.env.PORT ?? 3001;
+const app = createApp();
+app.listen(port, () => console.log(`API running on :${port}`));
