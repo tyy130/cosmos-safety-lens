@@ -25,22 +25,22 @@ const MOCK_RESULT: AnalysisResult = {
 
 describe('ReasoningPanel', () => {
   it('shows summary', () => {
-    render(<ReasoningPanel result={MOCK_RESULT} selectedEventIdx={null} />);
+    render(<ReasoningPanel onEventSelect={vi.fn()} result={MOCK_RESULT} selectedEventIdx={null} />);
     expect(screen.getByText('One critical near-miss detected.')).toBeTruthy();
   });
 
   it('shows selected event reasoning', () => {
-    render(<ReasoningPanel result={MOCK_RESULT} selectedEventIdx={0} />);
+    render(<ReasoningPanel onEventSelect={vi.fn()} result={MOCK_RESULT} selectedEventIdx={0} />);
     expect(screen.getByText('Insufficient stopping distance.')).toBeTruthy();
   });
 
   it('shows full think trace when no event selected', () => {
-    render(<ReasoningPanel result={MOCK_RESULT} selectedEventIdx={null} />);
+    render(<ReasoningPanel onEventSelect={vi.fn()} result={MOCK_RESULT} selectedEventIdx={null} />);
     expect(screen.getByText(/Vehicle A was traveling/)).toBeTruthy();
   });
 
   it('shows severity badge for selected event', () => {
-    render(<ReasoningPanel result={MOCK_RESULT} selectedEventIdx={0} />);
+    render(<ReasoningPanel onEventSelect={vi.fn()} result={MOCK_RESULT} selectedEventIdx={0} />);
     expect(screen.getByText('CRITICAL')).toBeTruthy();
   });
 });
