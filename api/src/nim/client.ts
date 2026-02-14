@@ -24,22 +24,28 @@ export async function analyzeVideo(videoUrl: string): Promise<string> {
   if (!apiKey) throw new Error('NVIDIA_API_KEY not set');
 
   const body = {
-    model: 'nvidia/cosmos-reason2-8b',
-    messages: [{
-      role: 'user',
-      content: [
-        {
-          type: 'video_url',
-          video_url: { url: videoUrl }
-        },
-        {
-          type: 'text',
-          text: SAFETY_PROMPT
-        }
-      ]
-    }],
+    model: 'nvidia/nemotron-nano-12b-v2-vl',
+    messages: [
+      {
+        role: 'system',
+        content: '/no_think'
+      },
+      {
+        role: 'user',
+        content: [
+          {
+            type: 'video_url',
+            video_url: { url: videoUrl }
+          },
+          {
+            type: 'text',
+            text: SAFETY_PROMPT
+          }
+        ]
+      }
+    ],
     max_tokens: 4096,
-    media_io_kwargs: { video: { fps: 4.0 } }
+    temperature: 0.0
   };
 
   const response = await fetch(NIM_ENDPOINT, {

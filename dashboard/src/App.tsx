@@ -42,7 +42,7 @@ export default function App() {
     <div className="app">
       <header>
         <h1>Cosmos Safety Lens</h1>
-        <p>Physical AI reasoning for dashcam footage — powered by NVIDIA Cosmos Reason 2</p>
+        <p>Physical AI reasoning for dashcam footage — powered by NVIDIA Nemotron Vision</p>
       </header>
       <DemoSelector onSelect={(clip: DemoClip) => {
         const absoluteUrl = clip.url.startsWith('/') ? window.location.origin + clip.url : clip.url;
