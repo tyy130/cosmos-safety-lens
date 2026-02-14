@@ -45,8 +45,9 @@ export default function App() {
         <p>Physical AI reasoning for dashcam footage — powered by NVIDIA Cosmos Reason 2</p>
       </header>
       <DemoSelector onSelect={(clip: DemoClip) => {
-        setVideoUrl(clip.url);
-        handleAnalyze(clip.url);
+        const absoluteUrl = clip.url.startsWith('/') ? window.location.origin + clip.url : clip.url;
+        setVideoUrl(absoluteUrl);
+        handleAnalyze(absoluteUrl);
       }} />
       <div className="url-input">
         <input

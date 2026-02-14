@@ -20,28 +20,26 @@ export interface DemoClip {
  * (https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction)
  * License: nexar-open-data-license
  *
- * Positive set: videos where a collision or imminent near-miss occurred.
- * Negative set: videos of normal driving with no collision/near-miss event.
- *
- * All URLs resolve publicly via HuggingFace CDN (HTTP 200, CORS: *).
+ * Clips are bundled with the dashboard at /public/clips/ to avoid CORS
+ * restrictions on the HuggingFace CDN. Paths are relative to the frontend origin.
  */
 export const DEMO_CLIPS: DemoClip[] = [
   {
     id: 'clip-1',
     label: 'Near-Miss Collision',
     description: 'Dashcam capture of a collision or imminent near-miss event (Nexar positive sample)',
-    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00002.mp4'
+    url: '/clips/00002.mp4'
   },
   {
     id: 'clip-2',
     label: 'High-Severity Impact',
     description: 'Higher-severity collision event captured on dashcam in varied conditions (Nexar positive sample)',
-    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00030.mp4'
+    url: '/clips/00030.mp4'
   },
   {
     id: 'clip-3',
     label: 'Normal Driving Baseline',
     description: 'Standard urban driving scenario with no collision event — safety baseline for model comparison (Nexar negative sample)',
-    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/negative/01044.mp4'
+    url: '/clips/01044.mp4'
   }
 ];
