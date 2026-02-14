@@ -12,9 +12,9 @@
 import type { DemoClip } from '../types';
 
 const DEMO_CLIPS: DemoClip[] = [
-  { id: 'clip-1', label: 'Near-Miss Collision', description: 'Nexar positive sample — imminent near-miss event', url: '/clips/00002.mp4' },
-  { id: 'clip-2', label: 'High-Severity Impact', description: 'Nexar positive sample — higher-severity collision', url: '/clips/00030.mp4' },
-  { id: 'clip-3', label: 'Normal Driving', description: 'Nexar negative sample — standard urban driving baseline', url: '/clips/01044.mp4' },
+  { id: 'clip-1', label: 'Near-Miss Collision', description: 'Nexar positive sample — imminent near-miss event', url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00002.mp4' },
+  { id: 'clip-2', label: 'High-Severity Impact', description: 'Nexar positive sample — higher-severity collision', url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00030.mp4' },
+  { id: 'clip-3', label: 'Normal Driving', description: 'Nexar negative sample — standard urban driving baseline', url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/negative/01044.mp4' },
 ];
 
 interface Props {
