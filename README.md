@@ -47,6 +47,12 @@ Safety events are overlaid on the video timeline as clickable markers. Clicking 
 
 Pre-loaded clips come from the [Nexar Collision Prediction Dataset](https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction) — 1,500 real dashcam clips, 50% collision/near-collision events.
 
+## Demo Video
+
+2m10s walkthrough video (submission-ready):
+
+- [`demo/cosmos-safety-lens-demo.mp4`](./demo/cosmos-safety-lens-demo.mp4)
+
 ## Deploy
 
 - **Frontend**: Vercel (`vercel --prod` from `/dashboard`)
