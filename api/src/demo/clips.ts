@@ -20,8 +20,7 @@ export interface DemoClip {
  * (https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction)
  * License: nexar-open-data-license
  *
- * Clips are bundled with the dashboard at /public/clips/ to avoid CORS
- * restrictions on the HuggingFace CDN. Paths are relative to the frontend origin.
+ * All URLs resolve publicly via HuggingFace CDN (HTTP 200).
  */
 export const DEMO_CLIPS: DemoClip[] = [
   {
@@ -40,6 +39,54 @@ export const DEMO_CLIPS: DemoClip[] = [
     id: 'clip-3',
     label: 'Normal Driving Baseline',
     description: 'Standard urban driving scenario with no collision event — safety baseline for model comparison (Nexar negative sample)',
-    url: '/clips/01044.mp4'
+    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/negative/01044.mp4'
+  },
+  {
+    id: 'clip-4',
+    label: 'Challenge: Night Density',
+    description: 'Low-light, high-density urban flow',
+    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00067.mp4'
+  },
+  {
+    id: 'clip-5',
+    label: 'Challenge: Glare Burst',
+    description: 'Strong glare and fast scene transitions',
+    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00075.mp4'
+  },
+  {
+    id: 'clip-6',
+    label: 'Challenge: Occlusion',
+    description: 'Partially obscured conflict dynamics',
+    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00137.mp4'
+  },
+  {
+    id: 'clip-7',
+    label: 'Challenge: High Motion',
+    description: 'Rapid motion + late scene disambiguation',
+    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00231.mp4'
+  },
+  {
+    id: 'clip-8',
+    label: 'Challenge: Baseline Complex A',
+    description: 'Non-collision baseline with dense context',
+    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/negative/01056.mp4'
+  },
+  {
+    id: 'clip-9',
+    label: 'Challenge: Baseline Complex B',
+    description: 'Normal driving with harder visual conditions',
+    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/negative/01139.mp4'
+  },
+  {
+    id: 'clip-10',
+    label: 'Challenge: Baseline Complex C',
+    description: 'Baseline clip with bright/saturated lighting',
+    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/negative/01244.mp4'
+  },
+  {
+    id: 'clip-11',
+    label: 'Challenge: Baseline Complex D',
+    description: 'Baseline clip with crowded roadway context',
+    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/negative/01347.mp4'
   }
 ];

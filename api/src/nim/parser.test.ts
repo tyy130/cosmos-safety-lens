@@ -47,7 +47,7 @@ describe('parseNimResponse', () => {
     const malformed = '<think>some reasoning</think>not valid json';
     const result = parseNimResponse(malformed);
     expect(result.events).toEqual([]);
-    expect(result.summary).toBe('Unable to parse structured response.');
+    expect(result.summary).toBe('Analysis complete — see reasoning chain.');
     expect(result.rawThink).toContain('some reasoning');
   });
 });

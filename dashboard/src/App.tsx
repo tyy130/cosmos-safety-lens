@@ -78,11 +78,31 @@ export default function App() {
       <footer className="attribution">
         <span className="attribution-label">Powered by</span>
         <div className="attribution-logos">
-          <a href="https://www.nvidia.com/en-us/ai/cosmos/" target="_blank" rel="noopener noreferrer" title="NVIDIA Cosmos">
+          <a
+            className="logo-tile nvidia"
+            href="https://www.nvidia.com/en-us/ai/cosmos/"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="NVIDIA Cosmos"
+          >
             <img src="/logos/nvidia.png" alt="NVIDIA" />
+            <div>
+              <strong>NVIDIA Cosmos</strong>
+              <span>Reason 2 Inference</span>
+            </div>
           </a>
-          <a href="https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction" target="_blank" rel="noopener noreferrer" title="Nexar Collision Prediction Dataset">
+          <a
+            className="logo-tile nexar"
+            href="https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Nexar Collision Prediction Dataset"
+          >
             <img src="/logos/nexar.png" alt="Nexar" />
+            <div>
+              <strong>Nexar Dataset</strong>
+              <span>Collision Prediction Clips</span>
+            </div>
           </a>
         </div>
       </footer>
