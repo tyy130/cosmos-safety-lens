@@ -10,6 +10,7 @@
 import express from 'express';
 import cors from 'cors';
 import { analyzeRouter } from './routes/analyze.js';
+import { diagRouter } from './routes/diag.js';
 import { DEMO_CLIPS } from './demo/clips.js';
 
 export function createApp() {
@@ -17,7 +18,11 @@ export function createApp() {
   app.use(express.json());
   app.use(cors({ origin: process.env.CORS_ORIGIN ?? '*' }));
   app.use('/analyze', analyzeRouter);
-  app.get('/health', (_req, res) => res.json({ ok: true }));
+  app.use('/diag', diagRouter);
+  app.get('/health', (_req, res) => res.json({
+    ok: true,
+    build: '2026-03-05-model-fallback-v1'
+  }));
   app.get('/demo-clips', (_req, res) => res.json(DEMO_CLIPS));
   return app;
 }

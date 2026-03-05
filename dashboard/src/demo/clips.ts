@@ -47,8 +47,8 @@ export const DEMO_CLIPS: DemoClip[] = [
   {
     id: 'clip-4',
     label: 'Challenge: Night Density',
-    description: 'Low-light, high-density urban flow',
-    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00067.mp4'
+    description: 'Ultra-low-light scene with dense night traffic interactions',
+    url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00161.mp4'
   },
   {
     id: 'clip-5',

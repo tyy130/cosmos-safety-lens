@@ -18,7 +18,7 @@ const CORE_CLIPS: DemoClip[] = [
 ];
 
 const CHALLENGE_CLIPS: DemoClip[] = [
-  { id: 'clip-4', label: 'Challenge: Night Density', description: 'Low-light, high-density urban flow', url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00067.mp4' },
+  { id: 'clip-4', label: 'Challenge: Night Density', description: 'Ultra-low-light scene with dense night traffic interactions', url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00161.mp4' },
   { id: 'clip-5', label: 'Challenge: Glare Burst', description: 'Strong glare and fast scene transitions', url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00075.mp4' },
   { id: 'clip-6', label: 'Challenge: Occlusion', description: 'Partially obscured conflict dynamics', url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00137.mp4' },
   { id: 'clip-7', label: 'Challenge: High Motion', description: 'Rapid motion + late scene disambiguation', url: 'https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction/resolve/main/test-public/positive/00231.mp4' },
@@ -30,9 +30,10 @@ const CHALLENGE_CLIPS: DemoClip[] = [
 
 interface Props {
   onSelect: (clip: DemoClip) => void;
+  disabled?: boolean;
 }
 
-export function DemoSelector({ onSelect }: Props) {
+export function DemoSelector({ onSelect, disabled = false }: Props) {
   return (
     <div className="demo-selector">
       <h3>Try a demo clip</h3>
@@ -41,6 +42,7 @@ export function DemoSelector({ onSelect }: Props) {
           <button
             key={clip.id}
             className="demo-clip-btn"
+            disabled={disabled}
             onClick={() => onSelect(clip)}
           >
             <strong>{clip.label}</strong>
@@ -55,6 +57,7 @@ export function DemoSelector({ onSelect }: Props) {
           <button
             key={clip.id}
             className="demo-clip-btn"
+            disabled={disabled}
             onClick={() => onSelect(clip)}
           >
             <strong>{clip.label}</strong>

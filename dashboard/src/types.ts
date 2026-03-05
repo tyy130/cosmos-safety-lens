@@ -29,3 +29,18 @@ export interface DemoClip {
   description: string;
   url: string;
 }
+
+export interface RuntimeReadiness {
+  ok: boolean;
+  callable: boolean;
+  api_base: string;
+  model: string;
+  error?: string;
+  status_code?: number;
+  remediation?: string[];
+  references?: {
+    apiExamples?: string;
+    forumStatus?: string;
+    localDeploy?: string;
+  };
+}
