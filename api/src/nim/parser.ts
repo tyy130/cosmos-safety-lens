@@ -26,7 +26,14 @@ export function parseNimResponse(raw: string): ParsedResponse {
   const rawThink = thinkMatch ? thinkMatch[1]!.trim() : '';
 
   // Extract JSON — everything after the closing </think> tag, or the whole string
-  const jsonStr = raw.replace(/<think>[\s\S]*?<\/think>/, '').trim();
+  let jsonStr = raw.replace(/<think>[\s\S]*?<\/think>/, '').trim();
+
+  // Strip markdown code fences if present
+  jsonStr = jsonStr.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
+
+  // Try to extract a JSON object if there's extra text around it
+  const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
+  if (jsonMatch) jsonStr = jsonMatch[0];
 
   try {
     const parsed = JSON.parse(jsonStr);
@@ -39,7 +46,7 @@ export function parseNimResponse(raw: string): ParsedResponse {
     return {
       rawThink,
       events: [],
-      summary: 'Unable to parse structured response.'
+      summary: rawThink ? 'Analysis complete — see reasoning chain.' : 'Unable to parse structured response.'
     };
   }
 }

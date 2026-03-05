@@ -27,10 +27,6 @@ export async function analyzeVideo(videoUrl: string): Promise<string> {
     model: 'nvidia/cosmos-reason2-8b',
     messages: [
       {
-        role: 'system',
-        content: '/no_think'
-      },
-      {
         role: 'user',
         content: [
           {
