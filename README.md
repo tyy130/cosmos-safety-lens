@@ -1,16 +1,31 @@
 # Cosmos Safety Lens
 
-Physical AI reasoning for dashcam footage — powered by **NVIDIA Cosmos Reason 2 (8B)**.
+Physical AI reasoning for dashcam footage with **NVIDIA Cosmos Reason 2 (8B)** compatibility.
+
+## Submission Links
+
+- Repo: https://github.com/Tactic-Dev/cosmos-safety-lens
+- Demo video (in repo): [`demo/cosmos-safety-lens-demo.mp4`](./demo/cosmos-safety-lens-demo.mp4)
+- Demo video (GitHub): https://github.com/Tactic-Dev/cosmos-safety-lens/blob/main/demo/cosmos-safety-lens-demo.mp4
 
 ## What It Does
 
-Upload any dashcam video URL and get chain-of-thought physical reasoning about every safety event:
+Upload any dashcam video URL and get physical reasoning about safety events:
 
 - **Near-miss detection** with trajectory analysis
 - **Pedestrian risk** assessment
 - **Hazard identification** with physical causation explained
 
-The `<think>` reasoning trace from Cosmos Reason 2 is surfaced directly in the UI — showing *why* an event is dangerous, not just that it was detected.
+The reasoning trace is surfaced directly in the UI, showing *why* an event is dangerous, not just that it was detected.
+
+## Run (Short)
+
+```bash
+cd api && cp .env.example .env && npm install && npm run dev
+cd ../dashboard && npm install && npm run dev
+```
+
+Open `http://localhost:5173`.
 
 ## Quick Start
 
@@ -51,6 +66,9 @@ curl http://localhost:3001/diag/callable
 ```
 
 Best-practice note: `/models` visibility alone is not enough. Always verify callable status using `/diag/callable` before demoing.
+Do not claim live inference unless `/diag/callable` returns `callable: true` for the current environment.
+
+If runtime is not callable, `/analyze` may return explicitly-labeled demo fallback output (`demo_mode: true`) for supported demo clips.
 
 References:
 - Cosmos Reason2 API examples: https://docs.nvidia.com/nim/vision-language-models/1.6.0/examples/cosmos-reason2/api.html
@@ -60,6 +78,7 @@ References:
 
 ```
 [Video URL] → POST /analyze → NVIDIA NIM (cosmos-reason2-8b) → parse reasoning → structured events
+                                      └─(if unavailable)→ demo cache (explicitly labeled)
 ```
 
 Safety events are overlaid on the video timeline as clickable markers. Clicking a marker reveals the full physical reasoning chain — the chain of thought Cosmos Reason 2 used to identify the danger.

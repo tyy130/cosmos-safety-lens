@@ -48,8 +48,8 @@ export default function App() {
     };
   }, []);
 
-  const analyzeBlocked = readinessLoading || readiness?.callable === false || Boolean(readinessError);
-  const analyzeBlockReason = readinessLoading
+  const runtimeNotCallable = readiness?.callable === false || Boolean(readinessError);
+  const runtimeStatusMessage = readinessLoading
     ? 'Checking Cosmos Reason 2 runtime...'
     : readinessError
       ? readinessError
@@ -57,10 +57,6 @@ export default function App() {
   const readinessRemediation = readiness?.remediation ?? [];
 
   async function handleAnalyze(url: string) {
-    if (analyzeBlocked) {
-      setError(analyzeBlockReason ?? 'Analyze is blocked until runtime is ready.');
-      return;
-    }
     setLoading(true);
     setError(null);
     setResult(null);
@@ -82,9 +78,15 @@ export default function App() {
         <p>Physical AI reasoning for dashcam footage — powered by NVIDIA Cosmos Reason 2</p>
       </header>
 
-      {analyzeBlocked && (
-        <div className="error preflight-error">
-          Runtime not ready: {analyzeBlockReason ?? 'Cosmos Reason 2 is currently not callable.'}
+      {readinessLoading && (
+        <div className="runtime-note">
+          {runtimeStatusMessage}
+        </div>
+      )}
+
+      {!readinessLoading && runtimeNotCallable && (
+        <div className="runtime-warning">
+          <strong>Transparency note:</strong> live NVIDIA inference is not currently callable in this environment. Analyze can still run, but supported demo clips may return cached demo results.
           {readiness && (
             <div className="preflight-meta">
               <div><strong>Model:</strong> {readiness.model}</div>
@@ -112,7 +114,7 @@ export default function App() {
         </div>
       )}
 
-      <DemoSelector disabled={analyzeBlocked} onSelect={(clip: DemoClip) => {
+      <DemoSelector disabled={loading} onSelect={(clip: DemoClip) => {
         setVideoUrl(clip.url);
         handleAnalyze(clip.url);
       }} />
@@ -123,11 +125,16 @@ export default function App() {
           value={videoUrl}
           onChange={e => setVideoUrl(e.target.value)}
         />
-        <button onClick={() => handleAnalyze(videoUrl)} disabled={loading || !videoUrl || analyzeBlocked}>
+        <button onClick={() => handleAnalyze(videoUrl)} disabled={loading || !videoUrl}>
           {loading ? 'Analyzing...' : 'Analyze'}
         </button>
       </div>
       {error && <div className="error">{error}</div>}
+      {result && (result.demo_mode || result.demo || result.inference_source === 'demo_cache') && (
+        <div className="runtime-warning fallback-note">
+          <strong>Transparency note:</strong> this response used demo fallback data (`demo_cache`) rather than a live NVIDIA model call.
+        </div>
+      )}
       {result && (
         <div className="results">
           <VideoPlayer

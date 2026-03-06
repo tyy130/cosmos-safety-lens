@@ -132,12 +132,15 @@ header p { color: var(--muted); margin-top: 0.25rem; }
 .demo-clip-btn span { font-size: 0.8rem; color: var(--muted); }
 
 .error { background: rgba(239,68,68,0.1); border: 1px solid var(--critical); border-radius: 8px; padding: 0.75rem 1rem; color: var(--critical); margin: 1rem 0; }
+.runtime-note { background: rgba(59,130,246,0.11); border: 1px solid rgba(59,130,246,0.55); border-radius: 8px; padding: 0.75rem 1rem; color: #b7d3ff; margin: 0.8rem 0 1rem; }
+.runtime-warning { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.65); border-radius: 8px; padding: 0.75rem 1rem; color: #ffdca4; margin: 0.8rem 0 1rem; }
+.fallback-note { margin-top: 1rem; }
 .preflight-error { margin: 0.75rem 0 1rem; }
-.preflight-meta { margin-top: 0.55rem; font-size: 0.82rem; color: #ffb7b7; }
-.preflight-steps { margin: 0.6rem 0 0.2rem 1.1rem; font-size: 0.83rem; line-height: 1.45; color: #ffd3d3; }
+.preflight-meta { margin-top: 0.55rem; font-size: 0.82rem; color: #ffe5bc; }
+.preflight-steps { margin: 0.6rem 0 0.2rem 1.1rem; font-size: 0.83rem; line-height: 1.45; color: #fff0d2; }
 .preflight-links { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 0.45rem; }
-.preflight-links a { color: #ffd7d7; font-size: 0.8rem; text-decoration: underline; }
-.preflight-links a:hover { color: #fff1f1; }
+.preflight-links a { color: #ffe3ad; font-size: 0.8rem; text-decoration: underline; }
+.preflight-links a:hover { color: #fff5de; }
 .summary p { font-size: 0.95rem; line-height: 1.6; }
 .duration { font-size: 0.8rem; color: var(--muted); display: block; margin-top: 0.25rem; }
 

@@ -21,6 +21,9 @@ export interface AnalysisResult {
   rawThink: string;
   duration_ms: number;
   video_url: string;
+  demo?: boolean;
+  demo_mode?: boolean;
+  inference_source?: 'nvidia_nim' | 'demo_cache';
 }
 
 export interface DemoClip {

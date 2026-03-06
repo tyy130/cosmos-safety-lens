@@ -10,9 +10,37 @@
 import { Router, type Request, type Response } from 'express';
 import { analyzeVideo, NimRequestError } from '../nim/client.js';
 import { parseNimResponse } from '../nim/parser.js';
-import { getDemoResult } from '../demo-cache.js';
+import { getDemoResult, type CachedResult } from '../demo-cache.js';
 
 export const analyzeRouter = Router();
+
+function normalizeSeverity(value: string): 'CRITICAL' | 'WARNING' | 'INFO' {
+  const normalized = value.trim().toUpperCase();
+  if (normalized === 'HIGH' || normalized === 'CRITICAL') return 'CRITICAL';
+  if (normalized === 'MEDIUM' || normalized === 'WARNING') return 'WARNING';
+  return 'INFO';
+}
+
+function inferEventType(label: string): 'near_miss' | 'unsafe_behavior' | 'hazard' | 'pedestrian_risk' {
+  const value = label.toLowerCase();
+  if (value.includes('pedestrian')) return 'pedestrian_risk';
+  if (value.includes('hazard')) return 'hazard';
+  if (value.includes('unsafe')) return 'unsafe_behavior';
+  return 'near_miss';
+}
+
+function normalizeDemoPayload(demo: CachedResult) {
+  return {
+    rawThink: demo.rawThink,
+    summary: demo.summary,
+    events: demo.events.map((event) => ({
+      timestamp_seconds: event.time,
+      type: inferEventType(event.label),
+      severity: normalizeSeverity(event.severity),
+      reasoning: event.description
+    }))
+  };
+}
 
 analyzeRouter.post('/', async (req: Request, res: Response) => {
   const { video_url } = req.body as Record<string, unknown>;
@@ -30,7 +58,9 @@ analyzeRouter.post('/', async (req: Request, res: Response) => {
     res.json({
       ...parsed,
       duration_ms: Date.now() - startMs,
-      video_url
+      video_url,
+      demo_mode: false,
+      inference_source: 'nvidia_nim'
     });
   } catch (error) {
     if (error instanceof NimRequestError) {
@@ -38,7 +68,15 @@ analyzeRouter.post('/', async (req: Request, res: Response) => {
       if (error.status === 404 || error.status === 403 || error.status === 503) {
         const demo = getDemoResult(video_url);
         if (demo) {
-          res.json({ ...demo, video_url, duration_ms: 0, demo_mode: true });
+          const normalized = normalizeDemoPayload(demo);
+          res.json({
+            ...normalized,
+            video_url,
+            duration_ms: 0,
+            demo: true,
+            demo_mode: true,
+            inference_source: 'demo_cache'
+          });
           return;
         }
       }
@@ -56,7 +94,15 @@ analyzeRouter.post('/', async (req: Request, res: Response) => {
       // Fall back to demo cache when no API key configured
       const demo = getDemoResult(video_url);
       if (demo) {
-        res.json({ ...demo, video_url, duration_ms: 0, demo_mode: true });
+        const normalized = normalizeDemoPayload(demo);
+        res.json({
+          ...normalized,
+          video_url,
+          duration_ms: 0,
+          demo: true,
+          demo_mode: true,
+          inference_source: 'demo_cache'
+        });
         return;
       }
       res.status(503).json({ error: 'Backend not configured: NVIDIA_API_KEY missing.' });

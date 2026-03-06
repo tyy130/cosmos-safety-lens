@@ -69,14 +69,16 @@ describe('POST /analyze', () => {
     expect(res.body.error).toContain('rate limited');
   });
 
-  it('returns 503 when NVIDIA API key is missing', async () => {
+  it('returns demo fallback payload when NVIDIA API key is missing', async () => {
     mockedAnalyzeVideo.mockRejectedValueOnce(new Error('NVIDIA_API_KEY not set'));
 
     const res = await request(app)
       .post('/analyze')
       .send({ video_url: 'https://example.com/clip.mp4' });
 
-    expect(res.status).toBe(503);
-    expect(res.body.error).toContain('NVIDIA_API_KEY');
+    expect(res.status).toBe(200);
+    expect(res.body.demo_mode).toBe(true);
+    expect(res.body.inference_source).toBe('demo_cache');
+    expect(res.body.events.length).toBeGreaterThan(0);
   });
 });
